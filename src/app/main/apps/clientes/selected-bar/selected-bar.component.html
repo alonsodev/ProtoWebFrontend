@@ -1,0 +1,36 @@
+<div fxFlex fxLayout="row" fxLayoutAlign="start center" class="p-24">
+
+    <div class="close-button-wrapper" fxFlex="0 1 auto" fxFlex.gt-sm="220px" (click)="deselectAll()">
+        <button class="p-8" mat-button fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon class="mr-8">arrow_back</mat-icon>
+            <span class="text-uppercase">Atrás</span>
+        </button>
+    </div>
+
+    <div fxFlex fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.gt-sm="space-between center">
+
+        <div>
+            <span class="selected-clientes-count">
+                <span class="mr-4">{{selectedClientes.length}}</span>
+                <span>selected</span>
+            </span>
+
+            <button mat-icon-button [matMenuTriggerFor]="selectMenu">
+                <mat-icon>arrow_drop_down</mat-icon>
+            </button>
+            <mat-menu #selectMenu="matMenu">
+                <button mat-menu-item (click)="selectAll()">Seleccionar Todos</button>
+                <button mat-menu-item (click)="deselectAll()">Deseleccionar Todos</button>
+            </mat-menu>
+
+        </div>
+
+        <div class="multi-select-actions">
+            <button mat-icon-button (click)="deleteSelectedClientes()" aria-label="delete selected">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+
+    </div>
+
+</div>

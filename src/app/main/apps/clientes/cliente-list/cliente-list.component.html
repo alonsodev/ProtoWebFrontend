@@ -1,0 +1,114 @@
+
+<mat-paginator  fxFlex #paginator [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>
+<mat-table #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="checkbox">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let cliente">
+            <mat-checkbox [(ngModel)]="checkboxes[cliente.id]" (ngModelChange)="onSelectedChange(cliente.id)"
+                          (click)="$event.stopPropagation()">
+            </mat-checkbox>
+        </mat-cell>
+    </ng-container>
+
+    <!-- Nombres Column -->
+    <ng-container matColumnDef="nombres">
+        <mat-header-cell *matHeaderCellDef>Nombres</mat-header-cell>
+        <mat-cell *matCellDef="let cliente">
+            <p class="text-truncate font-weight-600">{{cliente.nombres}}</p>
+        </mat-cell>
+    </ng-container>
+
+    <!-- Apellidos Column -->
+    <ng-container matColumnDef="apellidos">
+        <mat-header-cell *matHeaderCellDef>Apellidos</mat-header-cell>
+        <mat-cell *matCellDef="let cliente">
+            <p class="text-truncate font-weight-600">{{cliente.apellidos}}</p>
+        </mat-cell>
+    </ng-container>
+
+    <!-- Correo Column -->
+    <ng-container matColumnDef="correo">
+        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Correo</mat-header-cell>
+        <mat-cell *matCellDef="let cliente" fxHide fxShow.gt-sm>
+            <p class="correo text-truncate">
+                {{cliente.correo}}
+            </p>
+        </mat-cell>
+    </ng-container>
+
+    <!-- Fecha de Nacimiento -->
+    <ng-container matColumnDef="fechaNacimiento">
+        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Fecha de Nacimiento</mat-header-cell>
+        <mat-cell *matCellDef="let cliente" fxHide fxShow.gt-md>
+            <p class="fechaNacimiento text-truncate">
+                {{ (cliente.fechaNacimiento | date:'dd/MM/yyyy') || '-' }}
+            </p>
+        </mat-cell>
+    </ng-container>
+
+    <!-- Dirección Column -->
+    <ng-container matColumnDef="direccion">
+        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-lg>Dirección</mat-header-cell>
+        <mat-cell *matCellDef="let cliente" fxHide fxShow.gt-lg>
+            <p class="direccion text-truncate">
+                {{cliente.direccion}}
+            </p>
+        </mat-cell>
+    </ng-container>
+
+    <!-- Activo Column -->
+    <ng-container matColumnDef="activo">
+        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-lg>Activo</mat-header-cell>
+        <mat-cell *matCellDef="let cliente" fxHide fxShow.gt-lg>
+            <p class="activo text-truncate">
+                {{getActivoTexto(cliente)}}
+            </p>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="fechaRegistro">
+        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-lg>Fecha de Registro</mat-header-cell>
+        <mat-cell *matCellDef="let cliente" fxHide fxShow.gt-lg>
+            <p class="fechaRegistro text-truncate">
+                {{ (cliente.fechaRegistro | date:'dd/MM/yyyy') || '-' }}
+            
+            </p>
+        </mat-cell>
+    </ng-container>
+
+    <!-- Buttons Column -->
+    <ng-container matColumnDef="buttons">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let cliente">
+            <div fxFlex="row" fxLayoutAlign="end center">
+
+                <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More"
+                        (click)="$event.stopPropagation();">
+                    <mat-icon class="secondary-text">more_vert</mat-icon>
+                </button>
+
+                <mat-menu #moreMenu="matMenu">
+                    <button mat-menu-item aria-label="remove" (click)="deleteCliente(cliente)">
+                        <mat-icon>delete</mat-icon>
+                        <span>Eliminar</span>
+                    </button>
+                </mat-menu>
+            </div>
+
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let cliente; columns: displayedColumns;"
+             class="cliente"
+             (click)="editCliente(cliente)"
+             [ngClass]="{'accent-50':checkboxes[cliente.id]}"
+             [@animate]="{value:'*',params:{y:'100%'}}">
+    </mat-row>
+</mat-table>
+
+<div *ngIf="!dataSource.data.length" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
+    <span class="no-messages-text hint-text">No hay clientes!</span>
+</div>

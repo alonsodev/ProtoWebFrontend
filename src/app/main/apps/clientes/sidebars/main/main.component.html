@@ -1,0 +1,46 @@
+<div class="sidebar-content">
+
+    <div class="card">
+
+        <!-- SIDEBAR HEADER -->
+        <div class="header p-24" fxLayout="row" fxLayoutAlign="start center">
+
+            <!-- USER -->
+
+            <span class="h5">Filtrar por estado</span>
+            <!-- / USER -->
+
+        </div>
+        <!-- / SIDEBAR HEADER -->
+
+        <!-- SIDEBAR CONTENT -->
+        <div class="content py-16" fusePerfectScrollbar>
+
+            <div class="nav material2">
+
+                <div class="nav-item" aria-label="inbox">
+                    <a class="nav-link" matRipple (click)="changeFilter('all')"
+                       [ngClass]="{'active accent':filterBy ==='all'}">
+                        <span class="title">Todos los Clientes</span>
+                    </a>
+                </div>
+
+                <div class="nav-item" aria-label="frequently contacted" (click)="changeFilter('activo')">
+                    <a class="nav-link" matRipple [ngClass]="{'active accent':filterBy ==='activo'}">
+                        <div class="title">Activos</div>
+                    </a>
+                </div>
+
+                <div class="nav-item" aria-label="starred" (click)="changeFilter('inactivo')">
+                    <a class="nav-link" matRipple [ngClass]="{'active accent':filterBy ==='inactivo'}">
+                        <div class="title">Inactivos</div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- / SIDEBAR CONTENT -->
